@@ -1,5 +1,17 @@
 version: "3.8"
 services:
+  db:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: quitter-server
+    restart: unless-stopped
+
   app:
     build:
       context: .
@@ -7,6 +19,13 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
+    depends_on:
+      - db
     ports:
       - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:password@db:5432/quitter-server"
     restart: always
+
+volumes:
+  db-data:
