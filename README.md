@@ -3,11 +3,6 @@
 3 日間だけ投稿を続けるようにするアプリです。
 
 ## 開発用
-
-### セットアップ
-```shell
-echo 'DATABASE_URL="postgresql://postgres:password@db:5432/quitter-server"' > .env
-```
 ### ビルド
 ```shell
 docker build -f Dockerfile.dev .  
