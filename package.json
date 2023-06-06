@@ -14,10 +14,20 @@
     "lint:prettier": "prettier --check .",
     "fix": "run-s -l -c fix:eslint fix:prettier",
     "fix:eslint": "eslint --fix src/**/*.ts",
-    "fix:prettier": "prettier --write ."
+    "fix:prettier": "prettier --write .",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "prisma:dev": "run-s -l prisma:generate prisma:migrate prisma:seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@prisma/client": "^4.14.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "prisma": "^4.14.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

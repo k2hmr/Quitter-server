@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ./package* ./
 COPY ./yarn* ./
+COPY prisma ./prisma/
 
 RUN yarn
 
@@ -11,4 +12,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn", "run", "dev"]
+CMD ["./startup.sh"]
