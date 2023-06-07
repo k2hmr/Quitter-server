@@ -6,8 +6,9 @@ async function main() {
     where: { email: "test@email.com" },
     update: {},
     create: {
-      email: "test@email.com",
       name: "test",
+      email: "test@email.com",
+      password: "test",
     },
   });
 
@@ -15,8 +16,9 @@ async function main() {
     where: { email: "test2@email.com" },
     update: {},
     create: {
-      email: "test2@email.com",
       name: "test2",
+      email: "test2@email.com",
+      password: "test2",
     },
   });
   console.log({ test: test, test2: test2 });
