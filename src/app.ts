@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import useController from "./controllers/userController";
-import { verifyToken } from "./middleware/verifyToken";
+import { verifyToken } from "./infra/middleware/verifyToken";
 
 const app = express();
 app.use(cors());
