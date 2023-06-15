@@ -3,9 +3,9 @@ import { User, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class AuthRepository {
-  async getUser(id: string, email: string, password: string): Promise<User | null> {
+  async getUser(email: string, password: string): Promise<User | null> {
     return await prisma.user.findFirst({
-      where: { id: id, email: email, password: password },
+      where: { email: email, password: password },
     });
   }
 

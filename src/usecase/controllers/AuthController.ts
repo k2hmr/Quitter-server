@@ -10,9 +10,9 @@ export const AuthController = {
   },
 
   async login(req: Request, res: Response): Promise<void> {
-    const { id, email, password } = req.body;
+    const { email, password } = req.body;
     const authService = new AuthService();
-    const user = await authService.login(id, email, password);
+    const user = await authService.login(email, password);
     res.json(user);
   },
 };

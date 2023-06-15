@@ -10,7 +10,7 @@ export default class AuthService {
     await this.authRepository.createUser(name, email, password);
   }
 
-  async login(id: string, email: string, password: string): Promise<User | null> {
-    return await this.authRepository.getUser(id, email, password);
+  async login(email: string, password: string): Promise<User | null> {
+    return await this.authRepository.getUser(email, password);
   }
 }
