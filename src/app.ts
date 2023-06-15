@@ -1,15 +1,15 @@
 import express from "express";
 import cors from "cors";
-import useController from "./controllers/userController";
-import { verifyToken } from "./infra/middleware/verifyToken";
+import authRoute from "./infra/routes/AuthRoute";
+import userController from "./usecase/controllers/userController";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(verifyToken);
-app.use("/users", useController);
+app.use(authRoute);
+app.use("/users", userController);
 
 app.get("/", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/plain" });

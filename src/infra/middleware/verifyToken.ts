@@ -17,8 +17,6 @@ export const verifyToken = async (req: express.Request, res: express.Response, n
     const decodeValue = await auth.verifyIdToken(token);
     if (decodeValue) {
       req.user = decodeValue;
-      console.log(req.user);
-
       return next();
     }
     return res.json({ message: "Un authorize" });
