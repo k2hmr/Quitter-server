@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
-import authRoute from "./infra/routes/AuthRoute";
-import userController from "./usecase/controllers/userController";
+import userController from "./controller/userController";
+import authController from "./controller/AuthController";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(authRoute);
+app.use(authController);
 app.use("/users", userController);
 
 app.get("/", (req, res) => {

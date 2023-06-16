@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { AuthRepository } from "../../infra/repositories/AuthRepository";
+import { AuthRepository } from "../infra/repositories/AuthRepository";
 
 export default class AuthService {
   private authRepository: AuthRepository;
