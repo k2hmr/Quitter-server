@@ -1,5 +1,5 @@
 import { DecodedIdToken } from "firebase-admin/auth";
-import auth from "../../config/firebase-config";
+import auth from "../../config/firebase";
 import express, { NextFunction } from "express";
 // express.Requestに拡張でuser型を追加
 declare global {

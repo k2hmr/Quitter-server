@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
 import { verifyToken } from "../infra/middleware/verifyToken";
 import { RegisterByEmailAndPasswordUseCase } from "../usecase/userUseCase/RegisterByEmailAndPasswordUseCase";
-import { UserRepository } from "infra/repositories/UserRepository";
-import { LoginByEmailAndPasswordUseCase } from "usecase/userUseCase/LoginByEmailAndPasswordUseCase";
-import { FetchAllUsersUseCase } from "usecase/userUseCase/FetchAllUsersUseCase";
+import { UserRepository } from "../infra/repositories/UserRepository";
+import { LoginByEmailAndPasswordUseCase } from "../usecase/userUseCase/LoginByEmailAndPasswordUseCase";
+import { FetchAllUsersUseCase } from "../usecase/userUseCase/FetchAllUsersUseCase";
 
 const router = Router();
 

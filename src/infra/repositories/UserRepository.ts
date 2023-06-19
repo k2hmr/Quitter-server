@@ -1,4 +1,5 @@
-import { User, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { User } from "../../domain/user/UserEntity";
 
 const prisma = new PrismaClient();
 
@@ -16,13 +17,13 @@ export class UserRepository {
     });
   }
 
-  async getUser(email: string, password: string): Promise<User | null> {
+  async getUser(email: string, password: string): Promise<User["user"] | null> {
     return await prisma.user.findFirst({
       where: { email: email, password: password },
     });
   }
 
-  async getAllUser(): Promise<User[] | null> {
+  async getAllUser(): Promise<User["user"][] | null> {
     return await prisma.user.findMany();
   }
 }

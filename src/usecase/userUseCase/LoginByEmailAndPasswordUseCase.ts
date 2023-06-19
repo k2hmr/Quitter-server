@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User } from "../../domain/user/UserEntity";
 import { UserRepository } from "../../infra/repositories/UserRepository";
 
 export class LoginByEmailAndPasswordUseCase {
@@ -6,7 +6,7 @@ export class LoginByEmailAndPasswordUseCase {
     this.authRepository = new UserRepository();
   }
 
-  public async execute(email: string, password: string): Promise<User | null> {
+  public async execute(email: string, password: string): Promise<User["user"] | null> {
     return await this.authRepository.getUser(email, password);
   }
 }
