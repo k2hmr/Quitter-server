@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../domain/user/UserEntity";
+import { IUserRepository } from "../../interfaces/IUserRepository";
 
 const prisma = new PrismaClient();
 
-export class UserRepository {
-  async createUser(name: string, email: string, password: string): Promise<void> {
+export class UserRepository implements IUserRepository {
+  async create(name: string, email: string, password: string): Promise<void> {
     // データベースなどにユーザー情報を保存する処理を実装
     await prisma.user.upsert({
       where: { email: email },
@@ -17,13 +18,13 @@ export class UserRepository {
     });
   }
 
-  async getUser(email: string, password: string): Promise<User["user"] | null> {
+  async find(email: string, password: string): Promise<User["user"] | null> {
     return await prisma.user.findFirst({
       where: { email: email, password: password },
     });
   }
 
-  async getAllUser(): Promise<User["user"][] | null> {
+  async findAll(): Promise<User["user"][] | null> {
     return await prisma.user.findMany();
   }
 }

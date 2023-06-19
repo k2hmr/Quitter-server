@@ -1,10 +1,10 @@
-import { UserRepository } from "../../infra/repositories/UserRepository";
+import { IUserRepository } from "../../interfaces/IUserRepository";
 
 export class RegisterByEmailAndPasswordUseCase {
-  constructor(private readonly authRepository: UserRepository) {
-    this.authRepository = new UserRepository();
+  constructor(private readonly userRepository: IUserRepository) {
+    this.userRepository = userRepository;
   }
   public async execute(name: string, email: string, password: string): Promise<void> {
-    await this.authRepository.createUser(name, email, password);
+    await this.userRepository.create(name, email, password);
   }
 }

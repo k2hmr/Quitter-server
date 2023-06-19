@@ -1,12 +1,12 @@
+import { IUserRepository } from "../../interfaces/IUserRepository";
 import { User } from "../../domain/user/UserEntity";
-import { UserRepository } from "../../infra/repositories/UserRepository";
 
 export class LoginByEmailAndPasswordUseCase {
-  constructor(private readonly authRepository: UserRepository) {
-    this.authRepository = new UserRepository();
+  constructor(private readonly userRepository: IUserRepository) {
+    this.userRepository = userRepository;
   }
 
   public async execute(email: string, password: string): Promise<User["user"] | null> {
-    return await this.authRepository.getUser(email, password);
+    return await this.userRepository.find(email, password);
   }
 }

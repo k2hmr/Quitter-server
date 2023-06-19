@@ -1,11 +1,11 @@
+import { IUserRepository } from "../../interfaces/IUserRepository";
 import { User } from "../../domain/user/UserEntity";
-import { UserRepository } from "../../infra/repositories/UserRepository";
 
 export class FetchAllUsersUseCase {
-  constructor(private readonly authRepository: UserRepository) {
-    this.authRepository = new UserRepository();
+  constructor(private readonly userRepository: IUserRepository) {
+    this.userRepository = userRepository;
   }
   public async execute(): Promise<User["user"][] | null> {
-    return await this.authRepository.getAllUser();
+    return await this.userRepository.findAll();
   }
 }
