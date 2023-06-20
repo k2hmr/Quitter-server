@@ -1,6 +1,6 @@
-import { DecodedIdToken } from "firebase-admin/auth";
-import auth from "../../config/firebase";
+import { auth, DecodedIdToken } from "../../config/firebase";
 import express, { NextFunction } from "express";
+import { HttpError, internalErrorException, unauthorizedException } from "../../config/error";
 // express.Requestに拡張でuser型を追加
 declare global {
   namespace Express {
@@ -19,8 +19,8 @@ export const verifyToken = async (req: express.Request, res: express.Response, n
       req.user = decodeValue;
       return next();
     }
-    return res.json({ message: "Un authorize" });
+    return next(unauthorizedException("Un authorize"));
   } catch (e) {
-    return res.json({ message: "Internal Error" });
+    return next(internalErrorException("Internal error"));
   }
 };
