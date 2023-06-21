@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyToken } from "./middleware/verifyToken";
-import { UserController } from "../interfaces/controller/UserController";
-import { UserRepository } from "../domain/user/UserRepository";
+import { UserController } from "./controller/UserController";
+import { UserRepository } from "./repository/UserRepository";
 
 const userRepository = new UserRepository();
 const userController = new UserController(userRepository);

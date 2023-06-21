@@ -1,4 +1,4 @@
-import { IUserRepository } from "../../interfaces/IUserRepository";
+import { IUserRepository } from "../../domain/user/IUserRepository";
 
 export class RegisterByEmailAndPasswordUseCase {
   constructor(private readonly userRepository: IUserRepository) {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RegisterByEmailAndPasswordUseCase } from "../../usecase/userUseCase/RegisterByEmailAndPasswordUseCase";
-import { UserRepository } from "../../domain/user/UserRepository";
+import { UserRepository } from "../repository/UserRepository";
 import { LoginByEmailAndPasswordUseCase } from "../../usecase/userUseCase/LoginByEmailAndPasswordUseCase";
 import { FetchAllUsersUseCase } from "../../usecase/userUseCase/FetchAllUsersUseCase";
 import { unauthorizedException } from "../../exception/error";

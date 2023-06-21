@@ -1,4 +1,4 @@
-import { IUserRepository } from "../../interfaces/IUserRepository";
+import { IUserRepository } from "../../domain/user/IUserRepository";
 import { User } from "../../domain/user/UserEntity";
 
 export class LoginByEmailAndPasswordUseCase {
