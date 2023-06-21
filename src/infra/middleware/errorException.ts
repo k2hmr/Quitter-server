@@ -1,4 +1,4 @@
-import { HttpException } from "../../config/error";
+import { HttpException } from "../../exception/error";
 import { Request, Response } from "express";
 
 export default function errorHandler(err: HttpException, req: Request, res: Response): void {

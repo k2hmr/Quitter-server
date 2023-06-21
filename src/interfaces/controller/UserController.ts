@@ -3,7 +3,7 @@ import { RegisterByEmailAndPasswordUseCase } from "../../usecase/userUseCase/Reg
 import { UserRepository } from "../../domain/user/UserRepository";
 import { LoginByEmailAndPasswordUseCase } from "../../usecase/userUseCase/LoginByEmailAndPasswordUseCase";
 import { FetchAllUsersUseCase } from "../../usecase/userUseCase/FetchAllUsersUseCase";
-import { unauthorizedException } from "config/error";
+import { unauthorizedException } from "../../exception/error";
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {

@@ -1,6 +1,6 @@
 import { auth, DecodedIdToken } from "../../config/firebase";
 import express, { NextFunction } from "express";
-import { HttpError, internalErrorException, unauthorizedException } from "../../config/error";
+import { internalErrorException, unauthorizedException } from "../../exception/error";
 // express.Requestに拡張でuser型を追加
 declare global {
   namespace Express {
