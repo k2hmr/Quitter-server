@@ -19,8 +19,8 @@ export const verifyToken = async (req: express.Request, res: express.Response, n
       req.user = decodeValue;
       return next();
     }
-    return next(unauthorizedException("Un authorize"));
+    throw unauthorizedException("Un authorize");
   } catch (e) {
-    return next(internalErrorException("Internal error"));
+    throw internalErrorException("Internal error");
   }
 };
