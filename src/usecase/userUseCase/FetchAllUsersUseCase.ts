@@ -5,7 +5,7 @@ export class FetchAllUsersUseCase {
   constructor(private readonly userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
-  public async execute(): Promise<User[] | null> {
+  public async execute(): Promise<User[]> {
     return await this.userRepository.findAll();
   }
 }
