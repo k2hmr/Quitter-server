@@ -38,9 +38,9 @@ const checkUser = (name: string, email: string, password: string): void => {
     throw unprocessableEntityException("無効なメールアドレスです。");
   }
 
-  // if (password.length < 8) {
-  //   throw unprocessableEntityException("パスワードは8字以上で入力してください");
-  // }
+  if (password.length < 8) {
+    throw unprocessableEntityException("パスワードは8字以上で入力してください");
+  }
 
   if (password.length > 255) {
     throw unprocessableEntityException("パスワードは255文字未満で入力してください");
