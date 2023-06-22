@@ -1,19 +1,18 @@
 import { unprocessableEntityException } from "../../exception/error";
 
 export class User {
-  constructor(
-    public readonly id: string,
-    public readonly name: string,
-    public readonly email: string,
-    public readonly password: string,
-    public readonly createdAt: Date
-  ) {
-    checkUser(name, email, password);
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.createdAt = createdAt;
+  public readonly id: string;
+  public readonly name: string;
+  public readonly email: string;
+  public readonly password: string;
+  public readonly createdAt: Date;
+  constructor(userInfo: { id: string; name: string; email: string; password: string; createdAt: Date }) {
+    checkUser(userInfo.name, userInfo.email, userInfo.password);
+    this.id = userInfo.id;
+    this.name = userInfo.name;
+    this.email = userInfo.email;
+    this.password = userInfo.password;
+    this.createdAt = userInfo.createdAt;
   }
 }
 
@@ -39,9 +38,9 @@ const checkUser = (name: string, email: string, password: string): void => {
     throw unprocessableEntityException("無効なメールアドレスです。");
   }
 
-  if (password.length < 8) {
-    throw unprocessableEntityException("パスワードは8字以上で入力してください");
-  }
+  // if (password.length < 8) {
+  //   throw unprocessableEntityException("パスワードは8字以上で入力してください");
+  // }
 
   if (password.length > 255) {
     throw unprocessableEntityException("パスワードは255文字未満で入力してください");

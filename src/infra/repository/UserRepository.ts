@@ -6,13 +6,13 @@ import { unauthorizedException } from "../../exception/error";
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
-  async create(name: string, email: string, password: string): Promise<void> {
+  async create(userInfo: { name: string; email: string; password: string }): Promise<void> {
     try {
       await prisma.user.create({
         data: {
-          name: name,
-          email: email,
-          password: password,
+          name: userInfo.name,
+          email: userInfo.email,
+          password: userInfo.password,
         },
       });
     } catch (error) {
@@ -20,13 +20,19 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  async find(email: string, password: string): Promise<User> {
+  async find(userInfo: { email: string; password: string }): Promise<User> {
     try {
       const user = await prisma.user.findFirst({
-        where: { email: email, password: password },
+        where: { email: userInfo.email, password: userInfo.password },
       });
 
-      const domainUser = new User(user.id, user.name, user.email, user.password, user.created_at);
+      const domainUser = new User({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        createdAt: user.created_at,
+      });
       return domainUser;
     } catch (error) {
       throw unauthorizedException(error.message);
@@ -36,7 +42,13 @@ export class UserRepository implements IUserRepository {
   async findAll(): Promise<User[]> {
     const users = await prisma.user.findMany();
     const domainUsers = users.map((user) => {
-      return new User(user.id, user.name, user.email, user.password, user.created_at);
+      return new User({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        createdAt: user.created_at,
+      });
     });
     return domainUsers;
   }
