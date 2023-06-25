@@ -9,19 +9,34 @@ export class UserController {
     const { name, email, password } = req.body;
     const userRepository = new UserRepository();
     const registerByEmailAndPasswordUseCase = new RegisterByEmailAndPasswordUseCase(userRepository);
-    await registerByEmailAndPasswordUseCase.execute({ name, email, password });
+    try {
+      await registerByEmailAndPasswordUseCase.execute({ name, email, password });
+      res.status(200).json({ message: "Register successfully" });
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
   }
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     const userRepository = new UserRepository();
     const loginByEmailAndPasswordUseCase = new LoginByEmailAndPasswordUseCase(userRepository);
-    await loginByEmailAndPasswordUseCase.execute({ email, password });
+    try {
+      await loginByEmailAndPasswordUseCase.execute({ email, password });
+      res.status(200).json({ message: "Login successfully" });
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
   }
 
   async fetchAllUsers(req: Request, res: Response) {
     const userRepository = new UserRepository();
     const fetchAllUsersUseCase = new FetchAllUsersUseCase(userRepository);
-    await fetchAllUsersUseCase.execute();
+    try {
+      await fetchAllUsersUseCase.execute();
+      res.status(200).json({ message: "Fetch successfully" });
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
   }
 }
