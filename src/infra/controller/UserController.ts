@@ -9,34 +9,22 @@ export class UserController {
     const { name, email, password } = req.body;
     const userRepository = new UserRepository();
     const registerByEmailAndPasswordUseCase = new RegisterByEmailAndPasswordUseCase(userRepository);
-    try {
-      await registerByEmailAndPasswordUseCase.execute({ name, email, password });
-      res.status(200).json({ message: "Register successfully" });
-    } catch (error) {
-      res.status(401).json({ message: error.message });
-    }
+    await registerByEmailAndPasswordUseCase.execute({ name, email, password });
+    res.status(200).json({ message: "Register successfully" });
   }
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     const userRepository = new UserRepository();
     const loginByEmailAndPasswordUseCase = new LoginByEmailAndPasswordUseCase(userRepository);
-    try {
-      await loginByEmailAndPasswordUseCase.execute({ email, password });
-      res.status(200).json({ message: "Login successfully" });
-    } catch (error) {
-      res.status(401).json({ message: error.message });
-    }
+    await loginByEmailAndPasswordUseCase.execute({ email, password });
+    res.status(200).json({ message: "Login successfully" });
   }
 
   async fetchAllUsers(req: Request, res: Response) {
     const userRepository = new UserRepository();
     const fetchAllUsersUseCase = new FetchAllUsersUseCase(userRepository);
-    try {
-      await fetchAllUsersUseCase.execute();
-      res.status(200).json({ message: "Fetch successfully" });
-    } catch (error) {
-      res.status(401).json({ message: error.message });
-    }
+    await fetchAllUsersUseCase.execute();
+    res.status(200).json({ message: "Fetch successfully" });
   }
 }

@@ -4,7 +4,7 @@ export class RegisterByEmailAndPasswordUseCase {
   constructor(private readonly userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
-  public async execute(userInfo: { name: string; email: string; password: string }): Promise<void> {
-    await this.userRepository.create({ name: userInfo.name, email: userInfo.email, password: userInfo.password });
+  public async execute(user: { name: string; email: string; password: string }): Promise<void> {
+    await this.userRepository.create({ name: user.name, email: user.email, password: user.password });
   }
 }

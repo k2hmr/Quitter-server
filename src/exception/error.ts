@@ -16,6 +16,10 @@ export const forbiddenException = (message = "403 Forbidden"): HttpException => 
   return new HttpException(403, message);
 };
 
+export const notFoundException = (message = "404 Not Found"): HttpException => {
+  return new HttpException(403, message);
+};
+
 export const unprocessableEntityException = (message = "422 Unprocessable Entity"): HttpException => {
   return new HttpException(422, message);
 };
