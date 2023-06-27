@@ -1,5 +1,6 @@
 import { initializeApp, cert, ServiceAccount } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
+import { DecodedIdToken } from "firebase-admin/auth";
 
 import serviceAccountKey from "./serviceAccountKey.json";
 
@@ -8,4 +9,4 @@ const app = initializeApp({
 });
 
 const auth = getAuth(app);
-export default auth;
+export { auth, DecodedIdToken };
