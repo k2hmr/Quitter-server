@@ -44,7 +44,7 @@ export class UserRepository implements IUserRepository {
 
   async findAll(): Promise<User[]> {
     const users = await prisma.user.findMany();
-    const domainUsers = users.map((user) => {
+    return users.map((user) => {
       return new User({
         id: user.id,
         name: user.name,
@@ -53,6 +53,5 @@ export class UserRepository implements IUserRepository {
         createdAt: user.created_at,
       });
     });
-    return domainUsers;
   }
 }
