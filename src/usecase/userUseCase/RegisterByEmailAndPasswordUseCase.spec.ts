@@ -1,4 +1,4 @@
-import { UserRepositoryMock } from "../../usecase/shared/TestHelper";
+import { UserRepositoryMock } from "../mock/TestHelper";
 import { RegisterByEmailAndPasswordUseCase } from "./RegisterByEmailAndPasswordUseCase";
 
 describe("RegisterByEmailAndPasswordUseCase", () => {

@@ -1,5 +1,5 @@
 import { FetchAllUsersUseCase } from "./FetchAllUsersUseCase";
-import { UserRepositoryMock } from "../../usecase/shared/TestHelper";
+import { UserRepositoryMock } from "../mock/TestHelper";
 
 describe("FetchAllUsersUseCase", () => {
   let userRepository: UserRepositoryMock;
