@@ -17,9 +17,7 @@ describe("RegisterByEmailAndPasswordUseCase", () => {
       password: "password123",
     };
 
-    await registerByEmailAndPasswordUseCase.execute(user);
-
-    const registeredUser = await userRepository.find({ email: user.email, password: user.password });
+    const registeredUser = await registerByEmailAndPasswordUseCase.execute(user);
 
     expect(registeredUser).toBeDefined();
     expect(registeredUser.name).toBe(user.name);
