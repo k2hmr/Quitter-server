@@ -6,8 +6,8 @@ import { internalErrorException, notFoundException, unauthorizedException } from
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
-  async create(user: { name: string; email: string; password: string }): Promise<void> {
-    await prisma.user
+  async create(user: { name: string; email: string; password: string }): Promise<User> {
+    const createdUser = await prisma.user
       .create({
         data: {
           name: user.name,
@@ -18,6 +18,16 @@ export class UserRepository implements IUserRepository {
       .catch((error) => {
         throw unauthorizedException(error.message);
       });
+
+    const domainUser = new User({
+      id: createdUser.id,
+      name: createdUser.name,
+      email: createdUser.email,
+      password: createdUser.password,
+      createdAt: createdUser.created_at,
+    });
+
+    return domainUser;
   }
 
   async find(user: { email: string; password: string }): Promise<User> {
