@@ -21,6 +21,27 @@ async function main() {
       password: "test2@email.com",
     },
   });
+
+  await prisma.theme.create({
+    data: {
+      theme: "test",
+      category: "test",
+      priority: "中",
+      platform: "test",
+      userId: test.id,
+    },
+  });
+
+  await prisma.theme.create({
+    data: {
+      theme: "test",
+      category: "test",
+      priority: "中",
+      platform: "test",
+      userId: test.id,
+    },
+  });
+
   console.log({ test: test, test2: test2 });
 }
 
