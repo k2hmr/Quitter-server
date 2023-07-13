@@ -1,4 +1,4 @@
-import { Platform, Priority, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -26,8 +26,8 @@ async function main() {
     data: {
       theme: "test",
       category: "test",
-      priority: Priority.Low,
-      platform: Platform.Note,
+      priority: 3,
+      platform: 3,
       userId: test.id,
     },
   });
@@ -36,8 +36,8 @@ async function main() {
     data: {
       theme: "test",
       category: "test",
-      priority: Priority.High,
-      platform: Platform.Other,
+      priority: 1,
+      platform: 7,
       userId: test.id,
     },
   });

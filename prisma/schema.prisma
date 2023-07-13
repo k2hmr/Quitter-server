@@ -24,8 +24,8 @@ model Theme {
   id           String         @id @default(uuid()) @db.Char(36)
   theme        String         @db.VarChar(255)
   category     String         @db.VarChar(255)
-  priority     Priority       @default(Medium)
-  platform     Platform       @default(Note)
+  priority     Int            @db.SmallInt // 1: Low, 2: Medium, 3: High
+  platform     Int            @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
   created_at   DateTime       @default(now()) @map("created_at")
   user         User           @relation(fields: [userId], references: [id])
   userId       String         @db.Char(36)
@@ -66,20 +66,4 @@ model Feedback {
   created_at     DateTime     @default(now()) @map("created_at")
   postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
   postTemplateId String       @db.Char(36)
-}
-
-enum Priority {
-  Low
-  Medium
-  High
-}
-
-enum Platform {
-  Note
-  Youtube
-  Twitter
-  Tiktok
-  Qiita
-  Zenn
-  Other
 }

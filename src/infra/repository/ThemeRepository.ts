@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { platform } from "../../infra/type/platform";
-import { priority } from "../../infra/type/priority";
 import { IThemeRepository } from "../../domain/theme/IThemeRepository";
 import { Theme } from "../../domain/theme/ThemeEntity";
 import { internalErrorException, notAcceptableException, notFoundException } from "../../exception/error";
@@ -11,8 +9,8 @@ export class ThemeRepository implements IThemeRepository {
   async create(theme: {
     theme: string;
     category: string;
-    priority: priority;
-    platform: platform;
+    priority: number;
+    platform: number;
     userId: string;
   }): Promise<Theme> {
     const createdTheme = await prisma.theme

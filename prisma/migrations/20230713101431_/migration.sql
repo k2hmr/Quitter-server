@@ -1,9 +1,3 @@
--- CreateEnum
-CREATE TYPE "Priority" AS ENUM ('Low', 'Medium', 'High');
-
--- CreateEnum
-CREATE TYPE "Platform" AS ENUM ('Note', 'Youtube', 'Twitter', 'Tiktok', 'Qiita', 'Zenn', 'Other');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" CHAR(36) NOT NULL,
@@ -20,8 +14,8 @@ CREATE TABLE "Theme" (
     "id" CHAR(36) NOT NULL,
     "theme" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
-    "priority" "Priority" NOT NULL DEFAULT 'Medium',
-    "platform" "Platform" NOT NULL DEFAULT 'Note',
+    "priority" SMALLINT NOT NULL,
+    "platform" SMALLINT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" CHAR(36) NOT NULL,
 
