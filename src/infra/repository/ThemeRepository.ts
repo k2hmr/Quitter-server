@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { IThemeRepository } from "../../domain/theme/IThemeRepository";
 import { Theme } from "../../domain/theme/ThemeEntity";
-import { internalErrorException, notAcceptableException, notFoundException } from "../../exception/error";
+import { internalErrorException, notFoundException, unprocessableEntityException } from "../../exception/error";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +24,7 @@ export class ThemeRepository implements IThemeRepository {
         },
       })
       .catch((error) => {
-        throw notAcceptableException(error.message);
+        throw unprocessableEntityException(error.message);
       });
 
     const domainTheme = new Theme({
