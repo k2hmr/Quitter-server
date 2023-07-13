@@ -1,19 +1,21 @@
+import { platform } from "../../infra/type/platform";
+import { priority } from "../../infra/type/priority";
 import { unprocessableEntityException } from "../../exception/error";
 
 export class Theme {
   public readonly id: string;
   public readonly theme: string;
   public readonly category: string;
-  public readonly priority: string;
-  public readonly platform: string;
+  public readonly priority: priority;
+  public readonly platform: platform;
   public readonly createdAt: Date;
   public readonly userId: string;
   constructor(theme: {
     id: string;
     theme: string;
     category: string;
-    priority: string;
-    platform: string;
+    priority: priority;
+    platform: platform;
     createdAt: Date;
     userId: string;
   }) {
@@ -28,7 +30,7 @@ export class Theme {
   }
 }
 
-const checkTheme = (theme: string, category: string, priority: string, platform: string): void => {
+const checkTheme = (theme: string, category: string, priority: priority, platform: platform): void => {
   if (!theme) {
     throw unprocessableEntityException("テーマは必須です。");
   }
@@ -49,15 +51,7 @@ const checkTheme = (theme: string, category: string, priority: string, platform:
     throw unprocessableEntityException("優先度は必須です。");
   }
 
-  if (priority.length !== 1) {
-    throw unprocessableEntityException("優先度は1文字で入力してください");
-  }
-
   if (!platform) {
     throw unprocessableEntityException("プラットフォームは必須です。");
-  }
-
-  if (platform.length > 255) {
-    throw unprocessableEntityException("プラットフォームは255文字未満で入力してください");
   }
 };

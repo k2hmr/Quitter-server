@@ -11,21 +11,75 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid()) @db.VarChar(36)
-  name       String   @db.VarChar(255)
-  email      String   @unique @db.VarChar(255)
-  password   String   @db.VarChar(255)
-  created_at DateTime @default(now()) @map("created_at")
+  id         String     @id @default(uuid()) @db.Char(36)
+  name       String     @db.VarChar(255)
+  email      String     @unique @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  created_at DateTime   @default(now()) @map("created_at")
   Theme      Theme[]
+  Category   Category[]
 }
 
 model Theme {
-  id         String   @id @default(uuid()) @db.VarChar(36)
-  theme      String   @db.VarChar(255)
-  category   String   @db.VarChar(255)
-  priority   String   @db.VarChar(255)
-  platform   String   @db.VarChar(255)
+  id           String         @id @default(uuid()) @db.Char(36)
+  theme        String         @db.VarChar(255)
+  category     String         @db.VarChar(255)
+  priority     Priority       @default(Medium)
+  platform     Platform       @default(Note)
+  created_at   DateTime       @default(now()) @map("created_at")
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String         @db.Char(36)
+  PostTemplate PostTemplate[]
+}
+
+model Category {
+  id         String   @id @default(uuid()) @db.Char(36)
+  name       String   @db.VarChar(255)
   created_at DateTime @default(now()) @map("created_at")
   user       User     @relation(fields: [userId], references: [id])
-  userId     String
+  userId     String   @db.Char(36)
+}
+
+model PostTemplate {
+  id            String     @id @default(uuid()) @db.Char(36)
+  content       String     @db.VarChar(255)
+  is_registered Boolean    @default(false)
+  created_at    DateTime   @default(now()) @map("created_at")
+  theme         Theme      @relation(fields: [themeId], references: [id])
+  themeId       String     @db.Char(36)
+  Message       Message[]
+  Feedback      Feedback[]
+}
+
+model Message {
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  is_ai          Boolean      @default(false)
+  created_at     DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplateId String       @db.Char(36)
+}
+
+model Feedback {
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  created_at     DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplateId String       @db.Char(36)
+}
+
+enum Priority {
+  Low
+  Medium
+  High
+}
+
+enum Platform {
+  Note
+  Youtube
+  Twitter
+  Tiktok
+  Qiita
+  Zenn
+  Other
 }
