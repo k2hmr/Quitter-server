@@ -1,4 +1,6 @@
+import { IPriority, Priority } from "../types/priority";
 import { unprocessableEntityException } from "../../exception/error";
+import { IPlatform, Platform } from "../types/platform";
 
 export class Theme {
   public readonly id: string;
@@ -18,11 +20,13 @@ export class Theme {
     userId: string;
   }) {
     checkTheme(theme.theme, theme.category, theme.priority, theme.platform);
+    const valObj = createValObj(theme.priority, theme.platform);
+
     this.id = theme.id;
     this.theme = theme.theme;
     this.category = theme.category;
-    this.priority = theme.priority;
-    this.platform = theme.platform;
+    this.priority = valObj.priority;
+    this.platform = valObj.platform;
     this.createdAt = theme.createdAt;
     this.userId = theme.userId;
   }
@@ -49,15 +53,16 @@ const checkTheme = (theme: string, category: string, priority: number, platform:
     throw unprocessableEntityException("優先度は必須です。");
   }
 
-  if (!Number.isInteger(priority) || priority < 1 || priority > 3) {
-    throw unprocessableEntityException("優先度は1~3の整数です。");
-  }
-
   if (!platform) {
     throw unprocessableEntityException("プラットフォームは必須です。");
   }
+};
 
-  if (!Number.isInteger(platform) || platform < 1 || platform > 7) {
-    throw unprocessableEntityException("プラットフォームは1~7の整数です。");
-  }
+const createValObj = (_priority: number, _platform: number) => {
+  const priorityInputVal: IPriority = { priority: _priority };
+  const priority = Priority.create(priorityInputVal).priority;
+  const platformInputVal: IPlatform = { platform: _platform };
+  const platform = Platform.create(platformInputVal).platform;
+
+  return { priority, platform };
 };
