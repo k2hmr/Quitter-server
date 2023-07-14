@@ -22,27 +22,27 @@ async function main() {
     },
   });
 
-  await prisma.theme.create({
+  const test3 = await prisma.theme.create({
     data: {
       theme: "test",
       category: "test",
       priority: 3,
       platform: 3,
-      userId: test.id,
+      user_id: test.id,
     },
   });
 
-  await prisma.theme.create({
+  const test4 = await prisma.theme.create({
     data: {
       theme: "test",
       category: "test",
       priority: 1,
       platform: 7,
-      userId: test.id,
+      user_id: test.id,
     },
   });
 
-  console.log({ test: test, test2: test2 });
+  console.log({ test: test, test2: test2, test3: test3, test4: test4 });
 }
 
 main()
