@@ -28,7 +28,7 @@ async function main() {
       category: "test",
       priority: 3,
       platform: 3,
-      user_id: test.id,
+      userId: test.id,
     },
   });
 
@@ -38,7 +38,7 @@ async function main() {
       category: "test",
       priority: 1,
       platform: 7,
-      user_id: test.id,
+      userId: test.id,
     },
   });
 

@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { IThemeRepository } from "../../domain/theme/IThemeRepository";
 import { Theme } from "../../domain/theme/ThemeEntity";
 import { internalErrorException, notFoundException, unprocessableEntityException } from "../../exception/error";
+import { Platform } from "../../domain/theme/platform";
 
 const prisma = new PrismaClient();
 
@@ -10,7 +11,7 @@ export class ThemeRepository implements IThemeRepository {
     theme: string;
     category: string;
     priority: number;
-    platform: number;
+    platform: Platform;
     userId: string;
   }): Promise<Theme> {
     const createdTheme = await prisma.theme
@@ -20,7 +21,7 @@ export class ThemeRepository implements IThemeRepository {
           category: theme.category,
           priority: theme.priority,
           platform: theme.platform,
-          user_id: theme.userId,
+          userId: theme.userId,
         },
       })
       .catch((error) => {
@@ -33,8 +34,8 @@ export class ThemeRepository implements IThemeRepository {
       category: createdTheme.category,
       priority: createdTheme.priority,
       platform: createdTheme.platform,
-      createdAt: createdTheme.created_at,
-      userId: createdTheme.user_id,
+      createdAt: createdTheme.createdAt,
+      userId: createdTheme.userId,
     });
 
     return domainTheme;
@@ -43,7 +44,7 @@ export class ThemeRepository implements IThemeRepository {
   async find(theme: { id: string; userId: string }): Promise<Theme> {
     try {
       const targetTheme = await prisma.theme.findFirst({
-        where: { id: theme.id, user_id: theme.userId },
+        where: { id: theme.id, userId: theme.userId },
       });
 
       const domainTheme = new Theme({
@@ -52,8 +53,8 @@ export class ThemeRepository implements IThemeRepository {
         category: targetTheme.category,
         priority: targetTheme.priority,
         platform: targetTheme.platform,
-        createdAt: targetTheme.created_at,
-        userId: targetTheme.user_id,
+        createdAt: targetTheme.createdAt,
+        userId: targetTheme.userId,
       });
 
       return domainTheme;
@@ -66,7 +67,7 @@ export class ThemeRepository implements IThemeRepository {
   }
 
   async findAll(userId: string): Promise<Theme[]> {
-    const themes = await prisma.theme.findMany({ where: { user_id: userId } });
+    const themes = await prisma.theme.findMany({ where: { userId: userId } });
     return themes.map((theme) => {
       return new Theme({
         id: theme.id,
@@ -74,8 +75,8 @@ export class ThemeRepository implements IThemeRepository {
         category: theme.category,
         priority: theme.priority,
         platform: theme.platform,
-        createdAt: theme.created_at,
-        userId: theme.user_id,
+        createdAt: theme.createdAt,
+        userId: theme.userId,
       });
     });
   }

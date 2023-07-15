@@ -15,55 +15,67 @@ model User {
   name       String     @db.VarChar(255)
   email      String     @unique @db.VarChar(255)
   password   String     @db.VarChar(255)
-  created_at DateTime   @default(now()) @map("created_at")
+  createdAt  DateTime   @default(now()) @map("created_at")
   themes     Theme[]
   categories Category[]
+
+  @@map("users")
 }
 
 model Theme {
-  id             String         @id @default(uuid()) @db.Char(36)
-  theme          String         @db.VarChar(255)
-  category       String         @db.VarChar(255)
-  priority       Int            @default(2) @db.SmallInt // 1: Low, 2: Middle, 3: High
-  platform       Int            @default(1) @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
-  created_at     DateTime       @default(now()) @map("created_at")
-  user           User           @relation(fields: [user_id], references: [id])
-  user_id        String         @db.Char(36)
-  post_templates PostTemplate[]
+  id            String         @id @default(uuid()) @db.Char(36)
+  theme         String         @db.VarChar(255)
+  category      String         @db.VarChar(255)
+  priority      Int            @default(2) @db.SmallInt // 1: Low, 2: Middle, 3: High
+  platform      Int            @default(1) @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
+  createdAt     DateTime       @default(now()) @map("created_at")
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String         @map("user_id") @db.Char(36)
+  postTemplates PostTemplate[]
+
+  @@map("themes")
 }
 
 model Category {
-  id         String   @id @default(uuid()) @db.Char(36)
-  name       String   @db.VarChar(255)
-  created_at DateTime @default(now()) @map("created_at")
-  user       User     @relation(fields: [user_id], references: [id])
-  user_id    String   @db.Char(36)
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id") @db.Char(36)
+
+  @@map("categories")
 }
 
 model PostTemplate {
-  id            String     @id @default(uuid()) @db.Char(36)
-  content       String     @db.VarChar(255)
-  is_registered Boolean    @default(false)
-  created_at    DateTime   @default(now()) @map("created_at")
-  theme         Theme      @relation(fields: [theme_id], references: [id])
-  theme_id      String     @db.Char(36)
-  messages      Message[]
-  feedbacks     Feedback[]
+  id           String     @id @default(uuid()) @db.Char(36)
+  content      String     @db.VarChar(255)
+  isRegistered Boolean    @default(false) @map("is_registered")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  theme        Theme      @relation(fields: [themeId], references: [id])
+  themeId      String     @map("theme_id") @db.Char(36)
+  messages     Message[]
+  feedbacks    Feedback[]
+
+  @@map("post_templates")
 }
 
 model Message {
-  id               String       @id @default(uuid()) @db.Char(36)
-  content          String       @db.VarChar(255)
-  is_ai            Boolean      @default(false)
-  created_at       DateTime     @default(now()) @map("created_at")
-  post_template    PostTemplate @relation(fields: [post_template_id], references: [id])
-  post_template_id String       @db.Char(36)
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  isAi           Boolean      @default(false) @map("is_ai")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplateId String       @map("post_template_id") @db.Char(36)
+
+  @@map("messages")
 }
 
 model Feedback {
-  id               String       @id @default(uuid()) @db.Char(36)
-  content          String       @db.VarChar(255)
-  created_at       DateTime     @default(now()) @map("created_at")
-  post_template    PostTemplate @relation(fields: [post_template_id], references: [id])
-  post_template_id String       @db.Char(36)
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplateId String       @map("post_template_id") @db.Char(36)
+
+  @@map("feedbacks")
 }
