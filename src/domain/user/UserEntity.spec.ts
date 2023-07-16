@@ -11,7 +11,7 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    const userInstance = new User(user);
+    const userInstance = new User(user.id, user.name, user.email, user.password, user.createdAt);
 
     expect(userInstance.id).toBe(user.id);
     expect(userInstance.name).toBe(user.name);
@@ -29,7 +29,9 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(unprocessableEntityException("名前は必須です。"));
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
+      unprocessableEntityException("名前は必須です。")
+    );
   });
 
   it("should throw an error if name exceeds 255 characters", () => {
@@ -41,7 +43,9 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(unprocessableEntityException("名前は255文字未満で入力してください"));
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
+      unprocessableEntityException("名前は255文字未満で入力してください")
+    );
   });
 
   it("should throw an error if email is missing", () => {
@@ -53,7 +57,9 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(unprocessableEntityException("メールアドレスは必須です。"));
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
+      unprocessableEntityException("メールアドレスは必須です。")
+    );
   });
 
   it("should throw an error if email exceeds 255 characters", () => {
@@ -65,7 +71,7 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
       unprocessableEntityException("メールアドレスは255文字未満で入力してください")
     );
   });
@@ -79,7 +85,9 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(unprocessableEntityException("無効なメールアドレスです。"));
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
+      unprocessableEntityException("無効なメールアドレスです。")
+    );
   });
 
   it("should throw an error if password is less than 8 characters", () => {
@@ -91,7 +99,9 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(unprocessableEntityException("パスワードは8字以上で入力してください"));
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
+      unprocessableEntityException("パスワードは8字以上で入力してください")
+    );
   });
 
   it("should throw an error if password exceeds 255 characters", () => {
@@ -103,7 +113,7 @@ describe("User", () => {
       createdAt: new Date(),
     };
 
-    expect(() => new User(user)).toThrowError(
+    expect(() => new User(user.id, user.name, user.email, user.password, user.createdAt)).toThrowError(
       unprocessableEntityException("パスワードは255文字未満で入力してください")
     );
   });

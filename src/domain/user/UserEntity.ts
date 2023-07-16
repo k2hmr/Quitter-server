@@ -6,13 +6,13 @@ export class User {
   public readonly email: string;
   public readonly password: string;
   public readonly createdAt: Date;
-  constructor(user: { id: string; name: string; email: string; password: string; createdAt: Date }) {
-    checkUser(user.name, user.email, user.password);
-    this.id = user.id;
-    this.name = user.name;
-    this.email = user.email;
-    this.password = user.password;
-    this.createdAt = user.createdAt;
+  constructor(id: string, name: string, email: string, password: string, createdAt: Date) {
+    checkUser(name, email, password);
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.createdAt = createdAt;
   }
 }
 

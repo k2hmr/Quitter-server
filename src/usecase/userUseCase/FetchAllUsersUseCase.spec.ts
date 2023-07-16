@@ -23,8 +23,8 @@ describe("FetchAllUsersUseCase", () => {
       password: "password456",
     };
 
-    await userRepository.create(user1);
-    await userRepository.create(user2);
+    await userRepository.create(user1.name, user1.email, user1.password);
+    await userRepository.create(user2.name, user2.email, user2.password);
 
     const users = await fetchAllUsersUseCase.execute();
 

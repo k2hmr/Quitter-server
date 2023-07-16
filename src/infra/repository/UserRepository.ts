@@ -6,43 +6,37 @@ import { internalErrorException, notFoundException, unauthorizedException } from
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
-  async create(user: { name: string; email: string; password: string }): Promise<User> {
+  async create(name: string, email: string, password: string): Promise<User> {
     const createdUser = await prisma.user
       .create({
         data: {
-          name: user.name,
-          email: user.email,
-          password: user.password,
+          name: name,
+          email: email,
+          password: password,
         },
       })
       .catch((error) => {
         throw unauthorizedException(error.message);
       });
 
-    const domainUser = new User({
-      id: createdUser.id,
-      name: createdUser.name,
-      email: createdUser.email,
-      password: createdUser.password,
-      createdAt: createdUser.createdAt,
-    });
+    const domainUser = new User(
+      createdUser.id,
+      createdUser.name,
+      createdUser.email,
+      createdUser.password,
+      createdUser.createdAt
+    );
 
     return domainUser;
   }
 
-  async find(user: { email: string; password: string }): Promise<User> {
+  async find(email: string, password: string): Promise<User> {
     try {
       const account = await prisma.user.findFirst({
-        where: { email: user.email, password: user.password },
+        where: { email: email, password: password },
       });
 
-      const domainUser = new User({
-        id: account.id,
-        name: account.name,
-        email: account.email,
-        password: account.password,
-        createdAt: account.createdAt,
-      });
+      const domainUser = new User(account.id, account.name, account.email, account.password, account.createdAt);
       return domainUser;
     } catch (error) {
       // データが見つからなかった場合
@@ -55,13 +49,7 @@ export class UserRepository implements IUserRepository {
   async findAll(): Promise<User[]> {
     const users = await prisma.user.findMany();
     return users.map((user) => {
-      return new User({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        createdAt: user.createdAt,
-      });
+      return new User(user.id, user.name, user.email, user.password, user.createdAt);
     });
   }
 }
