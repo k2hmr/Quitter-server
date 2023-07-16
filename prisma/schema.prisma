@@ -26,7 +26,7 @@ model Category {
   id        String   @id @default(uuid()) @db.Char(36)
   name      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @map("created_at")
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   userId    String   @map("user_id") @db.Char(36)
   themes    Theme[]
 
@@ -41,7 +41,7 @@ model Theme {
   priority      Int            @default(2) @db.SmallInt // 1: Low, 2: Middle, 3: High
   platform      Int            @default(1) @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
   createdAt     DateTime       @default(now()) @map("created_at")
-  user          User           @relation(fields: [userId], references: [id])
+  user          User           @relation(fields: [userId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   userId        String         @map("user_id") @db.Char(36)
   postTemplates PostTemplate[]
 
@@ -53,7 +53,7 @@ model PostTemplate {
   content      String     @db.VarChar(255)
   isRegistered Boolean    @default(false) @map("is_registered")
   createdAt    DateTime   @default(now()) @map("created_at")
-  theme        Theme      @relation(fields: [themeId], references: [id])
+  theme        Theme      @relation(fields: [themeId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   themeId      String     @map("theme_id") @db.Char(36)
   messages     Message[]
   feedbacks    Feedback[]
@@ -66,7 +66,7 @@ model Message {
   content        String       @db.VarChar(255)
   isAi           Boolean      @default(false) @map("is_ai")
   createdAt      DateTime     @default(now()) @map("created_at")
-  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   postTemplateId String       @map("post_template_id") @db.Char(36)
 
   @@map("messages")
@@ -76,7 +76,7 @@ model Feedback {
   id             String       @id @default(uuid()) @db.Char(36)
   content        String       @db.VarChar(255)
   createdAt      DateTime     @default(now()) @map("created_at")
-  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id])
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id], onUpdate: Restrict, onDelete: Cascade)
   postTemplateId String       @map("post_template_id") @db.Char(36)
 
   @@map("feedbacks")

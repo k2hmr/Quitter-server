@@ -68,19 +68,19 @@ CREATE TABLE "feedbacks" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "categories" ADD CONSTRAINT "categories_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "categories" ADD CONSTRAINT "categories_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
 ALTER TABLE "themes" ADD CONSTRAINT "themes_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "themes" ADD CONSTRAINT "themes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "themes" ADD CONSTRAINT "themes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
-ALTER TABLE "post_templates" ADD CONSTRAINT "post_templates_theme_id_fkey" FOREIGN KEY ("theme_id") REFERENCES "themes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "post_templates" ADD CONSTRAINT "post_templates_theme_id_fkey" FOREIGN KEY ("theme_id") REFERENCES "themes"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
-ALTER TABLE "messages" ADD CONSTRAINT "messages_post_template_id_fkey" FOREIGN KEY ("post_template_id") REFERENCES "post_templates"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "messages" ADD CONSTRAINT "messages_post_template_id_fkey" FOREIGN KEY ("post_template_id") REFERENCES "post_templates"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
-ALTER TABLE "feedbacks" ADD CONSTRAINT "feedbacks_post_template_id_fkey" FOREIGN KEY ("post_template_id") REFERENCES "post_templates"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "feedbacks" ADD CONSTRAINT "feedbacks_post_template_id_fkey" FOREIGN KEY ("post_template_id") REFERENCES "post_templates"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
