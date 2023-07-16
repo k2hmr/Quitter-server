@@ -19,20 +19,23 @@ export class Theme {
     createdAt: Date,
     userId: string
   ) {
-    checkTheme(theme, categoryId, priority, platform);
-    const valObj = createValObj(priority, platform);
+    checkTheme(theme, categoryId);
+    const priorityInputVal: IPriority = { priority: priority };
+    const _priority = Priority.create(priorityInputVal).priority;
+    const platformInputVal: IPlatform = { platform: platform };
+    const _platform = Platform.create(platformInputVal).platform;
 
     this.id = id;
     this.theme = theme;
     this.categoryId = categoryId;
-    this.priority = valObj.priority;
-    this.platform = valObj.platform;
+    this.priority = _priority;
+    this.platform = _platform;
     this.createdAt = createdAt;
     this.userId = userId;
   }
 }
 
-const checkTheme = (theme: string, categoryId: string, priority: PriorityType, platform: PlatformType): void => {
+const checkTheme = (theme: string, categoryId: string): void => {
   if (!theme) {
     throw unprocessableEntityException("テーマは必須です。");
   }
@@ -44,21 +47,4 @@ const checkTheme = (theme: string, categoryId: string, priority: PriorityType, p
   if (!categoryId) {
     throw unprocessableEntityException("カテゴリは必須です。");
   }
-
-  if (!priority) {
-    throw unprocessableEntityException("優先度は必須です。");
-  }
-
-  if (!platform) {
-    throw unprocessableEntityException("プラットフォームは必須です。");
-  }
-};
-
-const createValObj = (_priority: PriorityType, _platform: PlatformType) => {
-  const priorityInputVal: IPriority = { priority: _priority };
-  const priority = Priority.create(priorityInputVal).priority;
-  const platformInputVal: IPlatform = { platform: _platform };
-  const platform = Platform.create(platformInputVal).platform;
-
-  return { priority, platform };
 };
