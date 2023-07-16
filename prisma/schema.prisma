@@ -22,10 +22,22 @@ model User {
   @@map("users")
 }
 
+model Category {
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id") @db.Char(36)
+  themes    Theme[]
+
+  @@map("categories")
+}
+
 model Theme {
   id            String         @id @default(uuid()) @db.Char(36)
   theme         String         @db.VarChar(255)
-  category      String         @db.VarChar(255)
+  category      Category       @relation(fields: [categoryId], references: [id])
+  categoryId    String         @map("category_id") @db.Char(36)
   priority      Int            @default(2) @db.SmallInt // 1: Low, 2: Middle, 3: High
   platform      Int            @default(1) @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
   createdAt     DateTime       @default(now()) @map("created_at")
@@ -34,16 +46,6 @@ model Theme {
   postTemplates PostTemplate[]
 
   @@map("themes")
-}
-
-model Category {
-  id        String   @id @default(uuid()) @db.Char(36)
-  name      String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @map("created_at")
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @map("user_id") @db.Char(36)
-
-  @@map("categories")
 }
 
 model PostTemplate {

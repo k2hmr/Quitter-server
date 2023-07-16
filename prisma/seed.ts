@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { PlatformType } from "../src/domain/theme/platform";
+import { PriorityType } from "../src/domain/theme/priority";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -12,37 +14,45 @@ async function main() {
     },
   });
 
-  const test2 = await prisma.user.upsert({
-    where: { email: "test2@email.com" },
-    update: {},
-    create: {
-      name: "test2",
-      email: "test2@email.com",
-      password: "test2@email.com",
+  const test2 = await prisma.category.create({
+    data: {
+      name: "test",
+      userId: test.id,
     },
   });
 
   const test3 = await prisma.theme.create({
     data: {
       theme: "test",
-      category: "test",
-      priority: 3,
-      platform: 3,
+      categoryId: test2.id,
+      priority: PriorityType.High,
+      platform: PlatformType.Note,
       userId: test.id,
     },
   });
 
-  const test4 = await prisma.theme.create({
+  const test4 = await prisma.postTemplate.create({
     data: {
-      theme: "test",
-      category: "test",
-      priority: 1,
-      platform: 7,
-      userId: test.id,
+      content: "test",
+      themeId: test3.id,
     },
   });
 
-  console.log({ test: test, test2: test2, test3: test3, test4: test4 });
+  const test5 = await prisma.message.create({
+    data: {
+      content: "test",
+      postTemplateId: test4.id,
+    },
+  });
+
+  const test6 = await prisma.feedback.create({
+    data: {
+      content: "test",
+      postTemplateId: test4.id,
+    },
+  });
+
+  console.log({ test: test, test2: test2, test3: test3, test4: test4, test5: test5, test6: test6 });
 }
 
 main()
