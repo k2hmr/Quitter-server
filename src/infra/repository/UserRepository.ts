@@ -24,7 +24,7 @@ export class UserRepository implements IUserRepository {
       name: createdUser.name,
       email: createdUser.email,
       password: createdUser.password,
-      createdAt: createdUser.created_at,
+      createdAt: createdUser.createdAt,
     });
 
     return domainUser;
@@ -41,7 +41,7 @@ export class UserRepository implements IUserRepository {
         name: account.name,
         email: account.email,
         password: account.password,
-        createdAt: account.created_at,
+        createdAt: account.createdAt,
       });
       return domainUser;
     } catch (error) {
@@ -60,7 +60,7 @@ export class UserRepository implements IUserRepository {
         name: user.name,
         email: user.email,
         password: user.password,
-        createdAt: user.created_at,
+        createdAt: user.createdAt,
       });
     });
   }

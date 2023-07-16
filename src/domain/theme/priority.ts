@@ -1,10 +1,6 @@
 import { unprocessableEntityException } from "../../exception/error";
 import { ValueObject } from "../shared/valueObject";
 
-export interface IPriority {
-  priority: number;
-}
-
 export const PriorityType = {
   Low: 1,
   Middle: 2,
@@ -13,8 +9,12 @@ export const PriorityType = {
 
 export type PriorityType = (typeof PriorityType)[keyof typeof PriorityType];
 
+export interface IPriority {
+  priority: PriorityType;
+}
+
 export class Priority extends ValueObject<IPriority> {
-  public get priority(): number {
+  public get priority(): PriorityType {
     return this.priority;
   }
 

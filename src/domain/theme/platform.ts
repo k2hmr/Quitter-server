@@ -1,10 +1,6 @@
 import { unprocessableEntityException } from "../../exception/error";
 import { ValueObject } from "../shared/valueObject";
 
-export interface IPlatform {
-  platform: number;
-}
-
 export const PlatformType = {
   Note: 1,
   Youtube: 2,
@@ -17,8 +13,12 @@ export const PlatformType = {
 
 export type PlatformType = (typeof PlatformType)[keyof typeof PlatformType];
 
+export interface IPlatform {
+  platform: PlatformType;
+}
+
 export class Platform extends ValueObject<IPlatform> {
-  public get platform(): number {
+  public get platform(): PlatformType {
     return this.platform;
   }
 

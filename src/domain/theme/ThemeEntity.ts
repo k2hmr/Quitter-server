@@ -1,38 +1,38 @@
-import { IPriority, Priority } from "../types/priority";
+import { IPriority, Priority, PriorityType } from "./priority";
 import { unprocessableEntityException } from "../../exception/error";
-import { IPlatform, Platform } from "../types/platform";
+import { IPlatform, Platform, PlatformType } from "./platform";
 
 export class Theme {
   public readonly id: string;
   public readonly theme: string;
-  public readonly category: string;
-  public readonly priority: number;
-  public readonly platform: number;
+  public readonly categoryId: string;
+  public readonly priority: PriorityType;
+  public readonly platform: PlatformType;
   public readonly createdAt: Date;
   public readonly userId: string;
-  constructor(theme: {
-    id: string;
-    theme: string;
-    category: string;
-    priority: number;
-    platform: number;
-    createdAt: Date;
-    userId: string;
-  }) {
-    checkTheme(theme.theme, theme.category, theme.priority, theme.platform);
-    const valObj = createValObj(theme.priority, theme.platform);
+  constructor(
+    id: string,
+    theme: string,
+    categoryId: string,
+    priority: PriorityType,
+    platform: PlatformType,
+    createdAt: Date,
+    userId: string
+  ) {
+    checkTheme(theme, categoryId, priority, platform);
+    const valObj = createValObj(priority, platform);
 
-    this.id = theme.id;
-    this.theme = theme.theme;
-    this.category = theme.category;
+    this.id = id;
+    this.theme = theme;
+    this.categoryId = categoryId;
     this.priority = valObj.priority;
     this.platform = valObj.platform;
-    this.createdAt = theme.createdAt;
-    this.userId = theme.userId;
+    this.createdAt = createdAt;
+    this.userId = userId;
   }
 }
 
-const checkTheme = (theme: string, category: string, priority: number, platform: number): void => {
+const checkTheme = (theme: string, categoryId: string, priority: PriorityType, platform: PlatformType): void => {
   if (!theme) {
     throw unprocessableEntityException("テーマは必須です。");
   }
@@ -41,12 +41,8 @@ const checkTheme = (theme: string, category: string, priority: number, platform:
     throw unprocessableEntityException("テーマは255文字未満で入力してください");
   }
 
-  if (!category) {
+  if (!categoryId) {
     throw unprocessableEntityException("カテゴリは必須です。");
-  }
-
-  if (category.length > 255) {
-    throw unprocessableEntityException("カテゴリは255文字未満で入力してください");
   }
 
   if (!priority) {
@@ -58,7 +54,7 @@ const checkTheme = (theme: string, category: string, priority: number, platform:
   }
 };
 
-const createValObj = (_priority: number, _platform: number) => {
+const createValObj = (_priority: PriorityType, _platform: PlatformType) => {
   const priorityInputVal: IPriority = { priority: _priority };
   const priority = Priority.create(priorityInputVal).priority;
   const platformInputVal: IPlatform = { platform: _platform };
