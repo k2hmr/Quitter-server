@@ -1,37 +1,48 @@
 import { IPriority, Priority, PriorityType } from "./priority";
 import { unprocessableEntityException } from "../../exception/error";
 import { IPlatform, Platform, PlatformType } from "./platform";
+import { ThemeId } from "./ThemeId";
+import { AggregateRoot } from "../shared/aggregateRoot";
 
-export class Theme {
-  public readonly id: string;
-  public readonly theme: string;
-  public readonly categoryId: string;
-  public readonly priority: PriorityType;
-  public readonly platform: PlatformType;
-  public readonly createdAt: Date;
-  public readonly userId: string;
-  constructor(
-    id: string,
-    theme: string,
-    categoryId: string,
-    priority: PriorityType,
-    platform: PlatformType,
-    createdAt: Date,
-    userId: string
-  ) {
-    checkTheme(theme, categoryId);
-    const priorityInputVal: IPriority = { priority: priority };
+export interface ITheme {
+  theme: string;
+  categoryId: string;
+  priority: PriorityType;
+  platform: PlatformType;
+  createdAt: Date;
+  userId: string;
+}
+
+export class Theme extends AggregateRoot<ITheme, ThemeId> {
+  public readonly theme: ITheme["theme"];
+  public readonly categoryId: ITheme["categoryId"];
+  public readonly priority: ITheme["priority"];
+  public readonly platform: ITheme["platform"];
+  public readonly createdAt: ITheme["createdAt"];
+  public readonly userId: ITheme["userId"];
+
+  constructor(props: ITheme, id: ThemeId) {
+    super(props, id);
+    checkTheme(props.theme, props.categoryId);
+    const priorityInputVal: IPriority = { priority: props.priority };
     const _priority = Priority.create(priorityInputVal).priority;
-    const platformInputVal: IPlatform = { platform: platform };
+    const platformInputVal: IPlatform = { platform: props.platform };
     const _platform = Platform.create(platformInputVal).platform;
 
-    this.id = id;
-    this.theme = theme;
-    this.categoryId = categoryId;
+    this.theme = props.theme;
+    this.categoryId = props.categoryId;
     this.priority = _priority;
     this.platform = _platform;
-    this.createdAt = createdAt;
-    this.userId = userId;
+    this.createdAt = props.createdAt;
+    this.userId = props.userId;
+  }
+
+  public static construct(props: ITheme): Theme {
+    return new Theme(props, ThemeId.construct());
+  }
+
+  public static reConstruct(props: ITheme, id: string): Theme {
+    return new Theme(props, ThemeId.reConstruct(id));
   }
 }
 
@@ -45,6 +56,6 @@ const checkTheme = (theme: string, categoryId: string): void => {
   }
 
   if (!categoryId) {
-    throw unprocessableEntityException("カテゴリは必須です。");
+    throw unprocessableEntityException("カテゴリIDは必須です。");
   }
 };

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { IThemeRepository } from "../../domain/theme/IThemeRepository";
 import { Theme } from "../../domain/theme/ThemeEntity";
-import { internalErrorException, notFoundException, unprocessableEntityException } from "../../exception/error";
+import { internalErrorException, notFoundException } from "../../exception/error";
 import { IPriority, Priority, PriorityType } from "../../domain/theme/priority";
 import { IPlatform, Platform, PlatformType } from "../../domain/theme/platform";
 
@@ -38,15 +38,14 @@ export class ThemeRepository implements IThemeRepository {
 
     const converted = convertToVOType(createdTheme.priority, createdTheme.platform);
 
-    const domainTheme = new Theme(
-      createdTheme.id,
-      createdTheme.theme,
-      createdTheme.categoryId,
-      converted.priority,
-      converted.platform,
-      createdTheme.createdAt,
-      createdTheme.userId
-    );
+    const domainTheme = Theme.construct({
+      theme: createdTheme.theme,
+      categoryId: createdTheme.categoryId,
+      priority: converted.priority,
+      platform: converted.platform,
+      createdAt: createdTheme.createdAt,
+      userId: createdTheme.userId,
+    });
 
     return domainTheme;
   }
@@ -58,14 +57,16 @@ export class ThemeRepository implements IThemeRepository {
       });
       const converted = convertToVOType(targetTheme.priority, targetTheme.platform);
 
-      const domainTheme = new Theme(
-        targetTheme.id,
-        targetTheme.theme,
-        targetTheme.categoryId,
-        converted.priority,
-        converted.platform,
-        targetTheme.createdAt,
-        targetTheme.userId
+      const domainTheme = Theme.reConstruct(
+        {
+          theme: targetTheme.theme,
+          categoryId: targetTheme.categoryId,
+          priority: converted.priority,
+          platform: converted.platform,
+          createdAt: targetTheme.createdAt,
+          userId: targetTheme.userId,
+        },
+        targetTheme.id
       );
 
       return domainTheme;
@@ -82,14 +83,16 @@ export class ThemeRepository implements IThemeRepository {
     return themes.map((theme) => {
       const converted = convertToVOType(theme.priority, theme.platform);
 
-      return new Theme(
-        theme.id,
-        theme.theme,
-        theme.categoryId,
-        converted.priority,
-        converted.platform,
-        theme.createdAt,
-        theme.userId
+      return Theme.reConstruct(
+        {
+          theme: theme.theme,
+          categoryId: theme.categoryId,
+          priority: converted.priority,
+          platform: converted.platform,
+          createdAt: theme.createdAt,
+          userId: theme.userId,
+        },
+        theme.id
       );
     });
   }

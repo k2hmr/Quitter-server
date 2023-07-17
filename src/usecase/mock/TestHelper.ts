@@ -7,7 +7,7 @@ export class UserRepositoryMock implements IUserRepository {
     this.users = [];
   }
   public async create(name: string, email: string, password: string): Promise<User> {
-    const createdUser = new User("1b413a81-f82a-4073-b094-e519ddea2fc8", name, email, password, new Date());
+    const createdUser = User.construct({ name, email, password, createdAt: new Date() });
     this.users.push(createdUser);
     return createdUser;
   }

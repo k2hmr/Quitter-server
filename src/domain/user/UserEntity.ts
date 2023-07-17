@@ -1,18 +1,33 @@
+import { AggregateRoot } from "../shared/aggregateRoot";
 import { unprocessableEntityException } from "../../exception/error";
+import { UserId } from "./UserId";
 
-export class User {
-  public readonly id: string;
-  public readonly name: string;
-  public readonly email: string;
-  public readonly password: string;
-  public readonly createdAt: Date;
-  constructor(id: string, name: string, email: string, password: string, createdAt: Date) {
-    checkUser(name, email, password);
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.createdAt = createdAt;
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+}
+export class User extends AggregateRoot<IUser, UserId> {
+  public readonly name: IUser["name"];
+  public readonly email: IUser["email"];
+  public readonly password: IUser["password"];
+  public readonly createdAt: IUser["createdAt"];
+  constructor(props: IUser, id: UserId) {
+    super(props, id);
+    checkUser(props.name, props.email, props.password);
+    this.name = props.name;
+    this.email = props.email;
+    this.password = props.password;
+    this.createdAt = props.createdAt;
+  }
+
+  public static construct(props: IUser): User {
+    return new User(props, UserId.construct());
+  }
+
+  public static reConstruct(props: IUser, id: string): User {
+    return new User(props, UserId.reConstruct(id));
   }
 }
 
