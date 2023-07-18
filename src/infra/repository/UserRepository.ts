@@ -19,12 +19,11 @@ export class UserRepository implements IUserRepository {
         throw unauthorizedException(error.message);
       });
 
-    const domainUser = new User({
-      id: createdUser.id,
+    const domainUser = User.construct({
       name: createdUser.name,
       email: createdUser.email,
       password: createdUser.password,
-      createdAt: createdUser.created_at,
+      createdAt: createdUser.createdAt,
     });
 
     return domainUser;
@@ -36,13 +35,10 @@ export class UserRepository implements IUserRepository {
         where: { email: user.email, password: user.password },
       });
 
-      const domainUser = new User({
-        id: account.id,
-        name: account.name,
-        email: account.email,
-        password: account.password,
-        createdAt: account.created_at,
-      });
+      const domainUser = User.reConstruct(
+        { name: account.name, email: account.email, password: account.password, createdAt: account.createdAt },
+        account.id
+      );
       return domainUser;
     } catch (error) {
       // データが見つからなかった場合
@@ -55,13 +51,10 @@ export class UserRepository implements IUserRepository {
   async findAll(): Promise<User[]> {
     const users = await prisma.user.findMany();
     return users.map((user) => {
-      return new User({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        createdAt: user.created_at,
-      });
+      return User.reConstruct(
+        { name: user.name, email: user.email, password: user.password, createdAt: user.createdAt },
+        user.id
+      );
     });
   }
 }

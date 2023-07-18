@@ -7,6 +7,6 @@ export class LoginByEmailAndPasswordUseCase {
   }
 
   public async execute(user: { email: string; password: string }): Promise<User> {
-    return await this.userRepository.find({ email: user.email, password: user.password });
+    return await this.userRepository.find(user);
   }
 }

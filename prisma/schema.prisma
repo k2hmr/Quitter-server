@@ -11,9 +11,73 @@ datasource db {
 }
 
 model User {
-  id         String   @id @db.VarChar(36) @default(uuid()) 
-  name       String   @db.VarChar(255)
-  email      String   @unique @db.VarChar(255)
-  password   String   @db.VarChar(255)
-  created_at DateTime @default(now()) @map("created_at")
+  id         String     @id @default(uuid()) @db.Char(36)
+  name       String     @db.VarChar(255)
+  email      String     @unique @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  themes     Theme[]
+  categories Category[]
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Char(36)
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onUpdate: Restrict, onDelete: Cascade)
+  userId    String   @map("user_id") @db.Char(36)
+  themes    Theme[]
+
+  @@map("categories")
+}
+
+model Theme {
+  id            String         @id @default(uuid()) @db.Char(36)
+  theme         String         @db.VarChar(255)
+  category      Category       @relation(fields: [categoryId], references: [id], onUpdate: Restrict, onDelete: Restrict)
+  categoryId    String         @map("category_id") @db.Char(36)
+  priority      Int            @default(2) @db.SmallInt // 1: Low, 2: Middle, 3: High
+  platform      Int            @default(1) @db.SmallInt // 1: Note, 2: Youtube, 3: Twitter, 4: Tiktok, 5: Qiita, 6: Zenn, 7: Other
+  createdAt     DateTime       @default(now()) @map("created_at")
+  user          User           @relation(fields: [userId], references: [id], onUpdate: Restrict, onDelete: Cascade)
+  userId        String         @map("user_id") @db.Char(36)
+  postTemplates PostTemplate[]
+
+  @@map("themes")
+}
+
+model PostTemplate {
+  id           String     @id @default(uuid()) @db.Char(36)
+  content      String     @db.VarChar(255)
+  isRegistered Boolean    @default(false) @map("is_registered")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  theme        Theme      @relation(fields: [themeId], references: [id], onUpdate: Restrict, onDelete: Cascade)
+  themeId      String     @map("theme_id") @db.Char(36)
+  messages     Message[]
+  feedbacks    Feedback[]
+
+  @@map("post_templates")
+}
+
+model Message {
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  isAi           Boolean      @default(false) @map("is_ai")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id], onUpdate: Restrict, onDelete: Cascade)
+  postTemplateId String       @map("post_template_id") @db.Char(36)
+
+  @@map("messages")
+}
+
+model Feedback {
+  id             String       @id @default(uuid()) @db.Char(36)
+  content        String       @db.VarChar(255)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  postTemplate   PostTemplate @relation(fields: [postTemplateId], references: [id], onUpdate: Restrict, onDelete: Cascade)
+  postTemplateId String       @map("post_template_id") @db.Char(36)
+
+  @@map("feedbacks")
 }

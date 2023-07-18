@@ -6,6 +6,6 @@ export class RegisterByEmailAndPasswordUseCase {
     this.userRepository = userRepository;
   }
   public async execute(user: { name: string; email: string; password: string }): Promise<User> {
-    return await this.userRepository.create({ name: user.name, email: user.email, password: user.password });
+    return await this.userRepository.create(user);
   }
 }
