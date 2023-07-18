@@ -9,7 +9,7 @@ export class UserController {
     const { name, email, password } = req.body;
     const userRepository = new UserRepository();
     const registerByEmailAndPasswordUseCase = new RegisterByEmailAndPasswordUseCase(userRepository);
-    const user = await registerByEmailAndPasswordUseCase.execute(name, email, password);
+    const user = await registerByEmailAndPasswordUseCase.execute({ name, email, password });
     res.status(200).json({ message: "Register successfully", user });
   }
 
@@ -17,7 +17,7 @@ export class UserController {
     const { email, password } = req.body;
     const userRepository = new UserRepository();
     const loginByEmailAndPasswordUseCase = new LoginByEmailAndPasswordUseCase(userRepository);
-    const user = await loginByEmailAndPasswordUseCase.execute(email, password);
+    const user = await loginByEmailAndPasswordUseCase.execute({ email, password });
     res.status(200).json({ message: "Login successfully", user });
   }
 

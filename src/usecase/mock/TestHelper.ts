@@ -6,13 +6,18 @@ export class UserRepositoryMock implements IUserRepository {
   constructor() {
     this.users = [];
   }
-  public async create(name: string, email: string, password: string): Promise<User> {
-    const createdUser = User.construct({ name, email, password, createdAt: new Date() });
+  public async create(user: { name: string; email: string; password: string }): Promise<User> {
+    const createdUser = User.construct({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      createdAt: new Date(),
+    });
     this.users.push(createdUser);
     return createdUser;
   }
-  public async find(email: string, password: string): Promise<User> {
-    return this.users.find((u) => u.email === email && u.password === password);
+  public async find(user: { email: string; password: string }): Promise<User> {
+    return this.users.find((u) => u.email === user.email && u.password === user.password);
   }
   public async findAll(): Promise<Array<User>> {
     return this.users;

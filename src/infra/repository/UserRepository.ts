@@ -6,13 +6,13 @@ import { internalErrorException, notFoundException, unauthorizedException } from
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
-  async create(name: string, email: string, password: string): Promise<User> {
+  async create(user: { name: string; email: string; password: string }): Promise<User> {
     const createdUser = await prisma.user
       .create({
         data: {
-          name: name,
-          email: email,
-          password: password,
+          name: user.name,
+          email: user.email,
+          password: user.password,
         },
       })
       .catch((error) => {
@@ -29,10 +29,10 @@ export class UserRepository implements IUserRepository {
     return domainUser;
   }
 
-  async find(email: string, password: string): Promise<User> {
+  async find(user: { email: string; password: string }): Promise<User> {
     try {
       const account = await prisma.user.findFirst({
-        where: { email: email, password: password },
+        where: { email: user.email, password: user.password },
       });
 
       const domainUser = User.reConstruct(

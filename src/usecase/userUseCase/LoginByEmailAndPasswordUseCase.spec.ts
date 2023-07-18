@@ -17,8 +17,8 @@ describe("LoginByEmailAndPasswordUseCase", () => {
       password: "password123",
     };
 
-    await userRepository.create(user.name, user.email, user.password);
-    const loggedInUser = await loginByEmailAndPasswordUseCase.execute(user.email, user.password);
+    await userRepository.create({ ...user });
+    const loggedInUser = await loginByEmailAndPasswordUseCase.execute(user);
 
     expect(loggedInUser).toBeDefined();
     expect(loggedInUser.name).toBe(user.name);
@@ -32,7 +32,7 @@ describe("LoginByEmailAndPasswordUseCase", () => {
       password: "password123",
     };
 
-    const user = await loginByEmailAndPasswordUseCase.execute(nonExistentUser.email, nonExistentUser.password);
+    const user = await loginByEmailAndPasswordUseCase.execute(nonExistentUser);
     expect(user).toBeUndefined();
   });
 });

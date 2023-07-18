@@ -3,14 +3,16 @@ import { unprocessableEntityException } from "../../exception/error";
 import { IPlatform, Platform, PlatformType } from "./platform";
 import { ThemeId } from "./ThemeId";
 import { AggregateRoot } from "../shared/aggregateRoot";
+import { UserId } from "../user/UserId";
+import { CategoryId } from "../category/CategoryId";
 
 export interface ITheme {
   theme: string;
-  categoryId: string;
+  categoryId: CategoryId;
   priority: PriorityType;
   platform: PlatformType;
   createdAt: Date;
-  userId: string;
+  userId: UserId;
 }
 
 export class Theme extends AggregateRoot<ITheme, ThemeId> {
@@ -46,7 +48,7 @@ export class Theme extends AggregateRoot<ITheme, ThemeId> {
   }
 }
 
-const checkTheme = (theme: string, categoryId: string): void => {
+const checkTheme = (theme: string, categoryId: CategoryId): void => {
   if (!theme) {
     throw unprocessableEntityException("テーマは必須です。");
   }
