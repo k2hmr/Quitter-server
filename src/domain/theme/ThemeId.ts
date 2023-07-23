@@ -6,6 +6,10 @@ export class ThemeId extends UniqueEntityId {
     super(value, "ThemeId");
   }
 
+  public toString(): string {
+    return this.value;
+  }
+
   public static construct(): ThemeId {
     return new ThemeId(randomUUID());
   }

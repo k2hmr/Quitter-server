@@ -6,6 +6,10 @@ export class UserId extends UniqueEntityId {
     super(value, "UserId");
   }
 
+  public toString(): string {
+    return this.value;
+  }
+
   public static construct(): UserId {
     return new UserId(randomUUID());
   }
