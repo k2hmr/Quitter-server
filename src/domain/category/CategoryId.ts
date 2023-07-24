@@ -6,6 +6,10 @@ export class CategoryId extends UniqueEntityId {
     super(value, "CategoryId");
   }
 
+  public toString(): string {
+    return this.value;
+  }
+
   public static construct(): CategoryId {
     return new CategoryId(randomUUID());
   }

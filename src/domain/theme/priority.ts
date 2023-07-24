@@ -14,12 +14,11 @@ export interface IPriority {
 }
 
 export class Priority extends ValueObject<IPriority> {
-  public get priority(): PriorityType {
-    return this.priority;
-  }
+  public readonly priority: IPriority["priority"];
 
   private constructor(props: IPriority) {
     super(props);
+    this.priority = props.priority;
   }
 
   public static create(props: IPriority): Priority {

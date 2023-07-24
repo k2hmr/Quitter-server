@@ -18,12 +18,10 @@ export interface IPlatform {
 }
 
 export class Platform extends ValueObject<IPlatform> {
-  public get platform(): PlatformType {
-    return this.platform;
-  }
-
+  public readonly platform: IPlatform["platform"];
   private constructor(props: IPlatform) {
     super(props);
+    this.platform = props.platform;
   }
 
   public static create(props: IPlatform): Platform {
