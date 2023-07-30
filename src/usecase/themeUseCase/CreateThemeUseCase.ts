@@ -2,8 +2,6 @@ import { PriorityType } from "../../domain/theme/priority";
 import { IThemeRepository } from "../../domain/theme/IThemeRepository";
 import { Theme } from "../../domain/theme/ThemeEntity";
 import { PlatformType } from "../../domain/theme/platform";
-import { CategoryId } from "../../domain/category/CategoryId";
-import { UserId } from "../../domain/user/UserId";
 import { CreateThemeService } from "../../domain/theme/services/createThemeService";
 
 export class CreateThemeUseCase {
@@ -18,13 +16,12 @@ export class CreateThemeUseCase {
     createdAt: Date;
     userId: string;
   }): Promise<Theme> {
-    new CreateThemeService({
+    const props = new CreateThemeService({
       themeRepository: this.themeRepository,
-      userId: UserId.reConstruct(theme.userId),
+      userId: theme.userId,
+      categoryId: theme.categoryId,
     });
-    const categoryId = CategoryId.reConstruct(theme.categoryId);
-    const userId = UserId.reConstruct(theme.userId);
-    const newTheme = Theme.construct({ ...theme, categoryId, userId });
+    const newTheme = Theme.construct({ ...theme, categoryId: props.categoryId, userId: props.userId });
     return await this.themeRepository.create(newTheme);
   }
 }

@@ -56,8 +56,4 @@ const checkTheme = (theme: string, categoryId: CategoryId): void => {
   if (theme.length > 255) {
     throw unprocessableEntityException("テーマは255文字未満で入力してください");
   }
-
-  if (!categoryId) {
-    throw unprocessableEntityException("カテゴリIDは必須です。");
-  }
 };
