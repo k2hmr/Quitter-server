@@ -38,14 +38,17 @@ export class ThemeRepository implements IThemeRepository {
 
     const converted = convertToVOType(createdTheme.priority, createdTheme.platform);
 
-    const domainTheme = Theme.construct({
-      theme: createdTheme.theme,
-      categoryId: CategoryId.reConstruct(createdTheme.categoryId),
-      priority: converted.priority,
-      platform: converted.platform,
-      createdAt: createdTheme.createdAt,
-      userId: UserId.reConstruct(createdTheme.userId),
-    });
+    const domainTheme = Theme.reConstruct(
+      {
+        theme: createdTheme.theme,
+        categoryId: CategoryId.reConstruct(createdTheme.categoryId),
+        priority: converted.priority,
+        platform: converted.platform,
+        createdAt: createdTheme.createdAt,
+        userId: UserId.reConstruct(createdTheme.userId),
+      },
+      createdTheme.id
+    );
 
     return domainTheme;
   }
