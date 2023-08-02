@@ -1,3 +1,4 @@
+import { UserId } from "../../domain/user/UserId";
 import { IUserRepository } from "../../domain/user/IUserRepository";
 import { User } from "../../domain/user/UserEntity";
 
@@ -21,5 +22,9 @@ export class UserRepositoryMock implements IUserRepository {
   }
   public async findAll(): Promise<Array<User>> {
     return this.users;
+  }
+
+  public async exists(id: UserId): Promise<boolean> {
+    return this.users.some((user) => user.id === id);
   }
 }

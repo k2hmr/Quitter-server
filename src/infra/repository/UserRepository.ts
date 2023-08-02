@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { User } from "../../domain/user/UserEntity";
 import { IUserRepository } from "../../domain/user/IUserRepository";
 import { internalErrorException, notFoundException, unauthorizedException } from "../../exception/error";
+import { UserId } from "../../domain/user/UserId";
 
 const prisma = new PrismaClient();
 
@@ -56,5 +57,10 @@ export class UserRepository implements IUserRepository {
         user.id
       );
     });
+  }
+
+  async exists(id: UserId): Promise<boolean> {
+    const user = await prisma.user.findFirst({ where: { id: id.toString() } });
+    return user !== null;
   }
 }
