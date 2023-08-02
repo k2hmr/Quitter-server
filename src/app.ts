@@ -21,5 +21,6 @@ app.get("/users", userController.fetchAllUsers);
 
 const themeController = new ThemeController();
 app.get("/themes", verifyToken, themeController.fetchAllThemes);
+app.post("/themes", verifyToken, themeController.createTheme);
 
 export default app;

@@ -25,7 +25,7 @@ export class Theme extends AggregateRoot<ITheme, ThemeId> {
 
   constructor(props: ITheme, id: ThemeId) {
     super(props, id);
-    checkTheme(props.theme, props.categoryId);
+    checkTheme(props.theme);
     const priorityInputVal: IPriority = { priority: props.priority };
     const _priority = Priority.create(priorityInputVal).priority;
     const platformInputVal: IPlatform = { platform: props.platform };
@@ -48,16 +48,12 @@ export class Theme extends AggregateRoot<ITheme, ThemeId> {
   }
 }
 
-const checkTheme = (theme: string, categoryId: CategoryId): void => {
+const checkTheme = (theme: string): void => {
   if (!theme) {
     throw unprocessableEntityException("テーマは必須です。");
   }
 
   if (theme.length > 255) {
     throw unprocessableEntityException("テーマは255文字未満で入力してください");
-  }
-
-  if (!categoryId) {
-    throw unprocessableEntityException("カテゴリIDは必須です。");
   }
 };
